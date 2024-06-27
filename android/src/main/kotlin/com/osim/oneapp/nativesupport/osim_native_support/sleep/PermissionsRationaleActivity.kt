@@ -14,12 +14,14 @@ import android.webkit.WebViewClient
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.airbnb.lottie.LottieAnimationView
+import com.blankj.utilcode.util.NetworkUtils
+import com.blankj.utilcode.util.NetworkUtils.OnNetworkStatusChangedListener
 import com.iwdael.immersive.setContentView
 import com.osim.oneapp.nativesupport.osim_native_support.OneAppNativeSharedPreference
 import com.osim.oneapp.nativesupport.osim_native_support.R
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 
-class PermissionsRationaleActivity: AppCompatActivity() {
+class PermissionsRationaleActivity: AppCompatActivity(), OnNetworkStatusChangedListener {
     private val loading: LottieAnimationView by lazy { findViewById(R.id.loading) }
     private val rlRefresh: RefreshLayout by lazy { findViewById(R.id.fl_refresh) }
     private val tvTitle: TextView by lazy { findViewById(R.id.tv_title) }
@@ -29,6 +31,7 @@ class PermissionsRationaleActivity: AppCompatActivity() {
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        NetworkUtils.registerNetworkStatusChangedListener(this)
         setContentView(
             R.layout.activity_permissions_rationale,
             android.R.color.transparent,
@@ -110,6 +113,7 @@ class PermissionsRationaleActivity: AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        NetworkUtils.unregisterNetworkStatusChangedListener(this)
         webContent.apply {
             clearMatches()
             clearHistory()
@@ -119,5 +123,11 @@ class PermissionsRationaleActivity: AppCompatActivity() {
         }
         CookieManager.getInstance().removeAllCookies(null)
         WebStorage.getInstance().deleteAllData()
+    }
+
+    override fun onDisconnected() {}
+
+    override fun onConnected(networkType: NetworkUtils.NetworkType) {
+        webContent.reload()
     }
 }
