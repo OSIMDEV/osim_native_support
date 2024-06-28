@@ -14,8 +14,7 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('getPlatformVersion test', (WidgetTester tester) async {
-    const OsimNativeSupport plugin = OsimNativeSupport.instance;
-    final bool ret = await plugin.sleepSaveUri('https://www.baidu.com');
+    final bool ret = await sleepSaveUri('https://www.baidu.com');
     // The version string depends on the host platform running the test, so
     // just assert that some non-empty string is returned.
     expect(ret, true);

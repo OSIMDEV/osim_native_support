@@ -20,12 +20,10 @@ void main() {
   });
 
   test('getPlatformVersion', () async {
-    OsimNativeSupport osimNativeSupportPlugin = OsimNativeSupport.instance;
     MockOsimNativeSupportPlatform fakePlatform =
         MockOsimNativeSupportPlatform();
     OsimNativeSupportPlatform.instance = fakePlatform;
 
-    expect(await osimNativeSupportPlugin.sleepSaveUri('https://www.baidu.com'),
-        true);
+    expect(await sleepSaveUri('https://www.baidu.com'), true);
   });
 }

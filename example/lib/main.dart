@@ -17,7 +17,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _opSuccess = '';
-  final _osimNativeSupportPlugin = OsimNativeSupport.instance;
 
   @override
   void initState() {
@@ -31,7 +30,7 @@ class _MyAppState extends State<MyApp> {
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
     try {
-      await _osimNativeSupportPlugin.sleepSaveUri("https://www.baidu.com");
+      await sleepSaveUri("https://www.baidu.com");
       successInfo = 'Success';
     } on PlatformException {
       successInfo = 'Failed to save uri.';
